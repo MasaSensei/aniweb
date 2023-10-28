@@ -30,11 +30,9 @@ const Hero = () => {
       spaceBetween={1000}
       slidesPerView={1}
       autoplay={{
-        Autoplay: {
-          delay: 5000,
-          disableOnInteraction: false,
-          stopOnLastSlide: false,
-        },
+        delay: 5000,
+        disableOnInteraction: false,
+        stopOnLastSlide: false,
       }}
       loop={true}
       onSlideChange={() => {}}
