@@ -1,17 +1,21 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Button, Card } from "react-bootstrap";
-import Anime from "@/components/types/Anime";
+import React, { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import { useSearch } from "@/lib/context/SearchContext";
+import { getData } from "@/lib/api/search";
+import Anime from "@/components/types/anime";
 
 const CardElements = () => {
-  const [animeData, setAnimeData] = useState<Anime[]>([]); // Tentukan tipe data Anime[]
-
+  const { searchQuery } = useSearch();
+  const [animeData, setAnimeData] = useState<Anime[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getData()
+    getData(searchQuery)
       .then((data) => {
+        // Menentukan tipe data untuk parameter data
         setAnimeData(data.data);
         setIsLoading(false);
       })
@@ -19,7 +23,7 @@ const CardElements = () => {
         console.error("Error fetching data:", error);
         setIsLoading(false);
       });
-  }, []);
+  }, [searchQuery]);
 
   return (
     <>
@@ -38,19 +42,5 @@ const CardElements = () => {
     </>
   );
 };
-
-async function getData() {
-  try {
-    const res = await fetch("https://api.jikan.moe/v4/anime?limit=10");
-    if (!res.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
 
 export default CardElements;

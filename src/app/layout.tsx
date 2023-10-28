@@ -1,6 +1,7 @@
 import NavScrollExample from "@/components/layouts/Navbar/Navbar";
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { SearchProvider } from "@/lib/context/SearchContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,9 +15,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Ani Web</title>
+      </head>
       <body>
-        <NavScrollExample />
-        {children}
+        <SearchProvider>
+          <NavScrollExample />
+          {children}
+        </SearchProvider>
       </body>
     </html>
   );

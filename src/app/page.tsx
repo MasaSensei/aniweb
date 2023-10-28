@@ -1,14 +1,20 @@
 import Elements from "@/components/elements";
+import Hero from "@/components/layouts/Hero/Hero";
+import { SearchProvider } from "@/lib/context/SearchContext";
 import Image from "next/image";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <div className="h-screen">
-      <h1 className="text-3xl">card</h1>
-      <div className="d-flex flex-lg-wrap gap-2">
+    <main>
+      <section className="vh-100">
+        <Hero />
+      </section>
+      <div className="d-flex flex-wrap justify-content-between gap-2 container-fluid">
+        <h1 className="h1 text-center">Aniweb</h1>
+        <Elements.Heading />
         <Elements.Card />
       </div>
-    </div>
+    </main>
   );
 }
