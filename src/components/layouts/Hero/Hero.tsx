@@ -5,7 +5,7 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 import { getSeasons } from "@/lib/api/seasons";
-import Anime from "@/components/types/anime";
+import Anime from "@/types/anime";
 
 const Hero = () => {
   const [animeData, setAnimeData] = useState<Anime[]>([]);
@@ -59,7 +59,12 @@ const Hero = () => {
                       className="container overflow-y-hidden"
                       style={{ zIndex: 1 }}
                     >
-                      <h1 className="h1 bold">{anime.title}</h1>
+                      <h1
+                        className="h1 bold"
+                        style={{ fontSize: "80px", fontWeight: "bold" }}
+                      >
+                        {anime.title}
+                      </h1>
                       <div className="h-50 overflow-hidden">
                         <p
                           className="display-6 overflow-y-hidden"

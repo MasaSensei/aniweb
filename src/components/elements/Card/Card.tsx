@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useSearch } from "@/lib/context/SearchContext";
 import { getData } from "@/lib/api/search";
-import Anime from "../../types/anime";
+import Anime from "@/types/anime";
 
 const CardElements = () => {
   const { searchQuery } = useSearch();
