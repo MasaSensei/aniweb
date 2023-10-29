@@ -11,8 +11,9 @@ export default function Home() {
         <Hero />
       </section>
       <div className="d-flex flex-wrap justify-content-between gap-2 container-fluid">
-        <h1 className="h1 text-center">Aniweb</h1>
-        <Elements.Heading />
+        <Elements.Heading>Series</Elements.Heading>
+        <Elements.Card />
+        <Elements.Heading>Movie</Elements.Heading>
         <Elements.Card />
       </div>
     </main>

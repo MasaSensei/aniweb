@@ -4,13 +4,24 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
-import { getSeasons } from "@/lib/api/seasons";
+import { getSeasons } from "@/lib/api/anime";
 import Anime from "@/types/anime";
+import Elements from "@/components/elements";
+import Styles from "./Hero.module.css";
 
 const Hero = () => {
   const [animeData, setAnimeData] = useState<Anime[]>([]);
   const [query, setQuery] = useState("now");
   const [isLoading, setIsLoading] = useState(true);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+  const openVideo = () => {
+    setIsVideoOpen(true);
+  };
+
+  const closeVideo = () => {
+    setIsVideoOpen(false);
+  };
 
   useEffect(() => {
     getSeasons(query)
@@ -24,6 +35,25 @@ const Hero = () => {
         setIsLoading(false);
       });
   });
+
+  useEffect(() => {
+    const handleDocumentClick = (e: any) => {
+      if (isVideoOpen) {
+        // Check if the click occurred outside the video pop-up
+        const videoPopup = document.querySelector(`.${Styles.videoPopup}`);
+        if (videoPopup && !videoPopup.contains(e.target)) {
+          closeVideo();
+        }
+      }
+    };
+
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, [isVideoOpen]);
+
   return (
     <Swiper
       modules={[Autoplay]}
@@ -54,27 +84,48 @@ const Hero = () => {
                     backgroundPosition: "center center",
                   }}
                 >
-                  <div className="col-lg-6 d-flex align-items-lg-center position-absolute flex-column text-light justify-content-center pt-4 pt-lg-0 order-2 order-lg-1">
+                  <div className="col-lg-6 col-12 px-auto px-lg-0 text-lg-start text-center d-flex align-items-lg-center position-absolute flex-column text-light justify-content-center pt-4 pt-lg-0 order-2 order-lg-1">
                     <div
                       className="container overflow-y-hidden"
                       style={{ zIndex: 1 }}
                     >
-                      <h1
-                        className="h1 bold"
-                        style={{ fontSize: "80px", fontWeight: "bold" }}
+                      <h1 className="fs-1 fw-bold">{anime.title}</h1>
+                      <p
+                        className="display-6 overflow-y-hidden"
+                        style={{ height: "230px", fontSize: "20px" }}
                       >
-                        {anime.title}
-                      </h1>
-                      <div className="h-50 overflow-hidden">
-                        <p
-                          className="display-6 overflow-y-hidden"
-                          style={{ height: "230px", fontSize: "20px" }}
-                        >
-                          {firstParagraph}
-                        </p>
-                      </div>
+                        {firstParagraph}
+                      </p>
+                      <Elements.Button
+                        className="ms-4"
+                        variant="light"
+                        size="lg"
+                        onClick={openVideo}
+                      >
+                        Watch Now
+                      </Elements.Button>
                     </div>
                   </div>
+                  {isVideoOpen && (
+                    <div className={Styles.videoPopup}>
+                      <div className={Styles.videoPopupContent}>
+                        <button
+                          className={Styles.closeButton}
+                          onClick={closeVideo}
+                        >
+                          Close
+                        </button>
+                        <iframe
+                          width="100%"
+                          height="100%"
+                          src="https://youtu.be/tUykBwEEPeI?si=dKkl77u_A0LL26i0"
+                          allowFullScreen
+                          title="YouTube Video"
+                        ></iframe>
+                      </div>
+                    </div>
+                  )}
+
                   <div
                     className="bg-black opacity-75"
                     style={{

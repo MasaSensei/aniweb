@@ -1,45 +1,30 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import { useSearch } from "@/lib/context/SearchContext";
-import { getData } from "@/lib/api/search";
-import Anime from "@/types/anime";
+import Link from "next/link";
+import { Image } from "react-bootstrap";
+import Style from "./Card.module.css";
+import { AiFillStar } from "react-icons/ai";
 
 const CardElements = () => {
-  const { searchQuery } = useSearch();
-  const [animeData, setAnimeData] = useState<Anime[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    getData(searchQuery)
-      .then((data) => {
-        // Menentukan tipe data untuk parameter data
-        setAnimeData(data.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setIsLoading(false);
-      });
-  }, [searchQuery]);
-
   return (
-    <>
-      {isLoading
-        ? "Loading..."
-        : animeData.map((anime, index) => (
-            <Card key={index} style={{ width: "18rem" }}>
-              <Card.Img variant="top" src={anime.images.webp.image_url} />
-              <Card.Body>
-                <Card.Title>{anime.title}</Card.Title>
-                <Card.Text>{anime.synopsis}</Card.Text>
-                <Button variant="primary">Go somewhere</Button>
-              </Card.Body>
-            </Card>
-          ))}
-    </>
+    <div className="position-relative grid-img">
+      <Link href="/anime">
+        <div className={Style.imageContainer}>
+          <Image
+            src="https://cdn.myanimelist.net/images/anime/4/43643l.webp"
+            fluid
+            className={Style.cardImage}
+          />
+          <div className={Style.overlay}>
+            <div className={Style.rating}>
+              <AiFillStar />
+              <span className="ms-2">8.08</span>
+            </div>
+            <div className={Style.title}>Sakura-sou no Pet na Kanojo</div>
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 };
 
