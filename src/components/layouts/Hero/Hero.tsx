@@ -7,7 +7,7 @@ import "swiper/css/autoplay";
 import { getSeasons } from "@/lib/api/anime";
 import Anime from "@/types/anime";
 import Elements from "@/components/elements";
-import Styles from "./Hero.module.css";
+import Styles from "@/components/layouts/Hero/Hero.module.css";
 
 const Hero = () => {
   const [animeData, setAnimeData] = useState<Anime[]>([]);

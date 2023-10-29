@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Image } from "react-bootstrap";
-import Style from "./Card.module.css";
+import Style from "@/components/elements/Card/Card.module.css";
 import { AiFillStar } from "react-icons/ai";
 
 const CardElements = () => {
