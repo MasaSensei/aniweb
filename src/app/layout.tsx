@@ -2,7 +2,7 @@ import NavScrollExample from "@/components/layouts/Navbar/Navbar";
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SearchProvider } from "@/lib/context/SearchContext";
-import "@/app/globals.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Ani Web",
