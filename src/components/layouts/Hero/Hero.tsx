@@ -11,7 +11,7 @@ import Styles from "@/components/layouts/Hero/Hero.module.css";
 
 const Hero = () => {
   const [animeData, setAnimeData] = useState<Anime[]>([]);
-  const [query, setQuery] = useState("now");
+  const [query, setQuery] = useState("upcoming");
   const [isLoading, setIsLoading] = useState(true);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
