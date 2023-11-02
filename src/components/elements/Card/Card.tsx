@@ -9,13 +9,14 @@ interface CardProps {
   judul: string;
   rating: number;
   image: string;
+  link: string;
 }
 
 const CardElements: React.FC<CardProps> = (props) => {
-  const { judul, rating, image } = props;
+  const { judul, rating, image, link } = props;
   return (
     <div className="position-relative grid-img">
-      <Link href="/anime">
+      <Link href={link}>
         <div className={Style.imageContainer}>
           <Image src={image} fluid className={Style.cardImage} />
           <div className={Style.overlay}>

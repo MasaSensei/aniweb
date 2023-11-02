@@ -13,15 +13,6 @@ const Hero = () => {
   const [animeData, setAnimeData] = useState<Anime[]>([]);
   const [query, setQuery] = useState("upcoming");
   const [isLoading, setIsLoading] = useState(true);
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
-
-  const openVideo = () => {
-    setIsVideoOpen(true);
-  };
-
-  const closeVideo = () => {
-    setIsVideoOpen(false);
-  };
 
   useEffect(() => {
     getSeasons(query)
@@ -35,24 +26,6 @@ const Hero = () => {
         setIsLoading(false);
       });
   });
-
-  useEffect(() => {
-    const handleDocumentClick = (e: any) => {
-      if (isVideoOpen) {
-        // Check if the click occurred outside the video pop-up
-        const videoPopup = document.querySelector(`.${Styles.videoPopup}`);
-        if (videoPopup && !videoPopup.contains(e.target)) {
-          closeVideo();
-        }
-      }
-    };
-
-    document.addEventListener("click", handleDocumentClick);
-
-    return () => {
-      document.removeEventListener("click", handleDocumentClick);
-    };
-  }, [isVideoOpen]);
 
   return (
     <Swiper
@@ -69,76 +42,68 @@ const Hero = () => {
     >
       {isLoading
         ? "loading..."
-        : animeData.slice(0, 10).map((anime, index) => {
-            // Memisahkan teks synopsis menjadi kalimat-kalimat
-            const sentences: string[] = anime.synopsis.split("\n\n");
-            // Mengambil satu atau dua kalimat pertama
-            const firstParagraph: string = sentences.slice(0, 2).join("\n\n");
-            return (
-              <SwiperSlide key={index}>
-                <section
-                  className="w-100 container-fluid d-flex align-items-center vh-100"
-                  style={{
-                    backgroundImage: `url(${anime.trailer.images.maximum_image_url})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center center",
-                  }}
-                >
-                  <div className="col-lg-6 col-12 px-auto px-lg-0 text-lg-start text-center d-flex align-items-lg-center position-absolute flex-column text-light justify-content-center pt-4 pt-lg-0 order-2 order-lg-1">
-                    <div
-                      className="container overflow-y-hidden"
-                      style={{ zIndex: 1 }}
-                    >
-                      <h1 className="fs-1 fw-bold">{anime.title}</h1>
-                      <p
-                        className="display-6 overflow-y-hidden"
-                        style={{ height: "230px", fontSize: "20px" }}
+        : animeData.slice(0, 25).map((anime, index) => {
+            if (anime.synopsis !== null) {
+              // Memisahkan teks synopsis menjadi kalimat-kalimat
+              const sentences: string[] = anime.synopsis.split("\n\n");
+              // Mengambil satu atau dua kalimat pertama
+              const firstParagraph: string = sentences.slice(0, 2).join("\n\n");
+              if (
+                anime.trailer.images.maximum_image_url !== null &&
+                anime.trailer.images.maximum_image_url !==
+                  "https://img.youtube.com/vi/Q4lKtBRWjwI/maxresdefault.jpg"
+              ) {
+                return (
+                  <SwiperSlide key={index}>
+                    {anime.trailer.images.maximum_image_url !== null && (
+                      <section
+                        className="w-100 container-fluid d-flex align-items-center vh-100"
+                        style={{
+                          backgroundImage: `url(${anime.trailer.images.maximum_image_url})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center center",
+                        }}
                       >
-                        {firstParagraph}
-                      </p>
-                      <Elements.Button
-                        className="ms-4"
-                        variant="light"
-                        size="lg"
-                        onClick={openVideo}
-                      >
-                        Watch Now
-                      </Elements.Button>
-                    </div>
-                  </div>
-                  {isVideoOpen && (
-                    <div className={Styles.videoPopup}>
-                      <div className={Styles.videoPopupContent}>
-                        <button
-                          className={Styles.closeButton}
-                          onClick={closeVideo}
-                        >
-                          Close
-                        </button>
-                        <iframe
-                          width="100%"
-                          height="100%"
-                          src="https://youtu.be/tUykBwEEPeI?si=dKkl77u_A0LL26i0"
-                          allowFullScreen
-                          title="YouTube Video"
-                        ></iframe>
-                      </div>
-                    </div>
-                  )}
-
-                  <div
-                    className="bg-black opacity-75"
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  ></div>
-                </section>
-              </SwiperSlide>
-            );
+                        <div className="col-lg-6 col-12 px-auto px-lg-0 text-lg-start text-center d-flex align-items-lg-center position-absolute flex-column text-light justify-content-center pt-4 pt-lg-0 order-2 order-lg-1">
+                          <div
+                            className="container overflow-y-hidden"
+                            style={{ zIndex: 1 }}
+                          >
+                            <h1 className="fs-1 fw-bold">{anime.title}</h1>
+                            <p
+                              className="display-6 overflow-y-hidden"
+                              style={{ height: "230px", fontSize: "20px" }}
+                            >
+                              {firstParagraph}
+                            </p>
+                            <Elements.Button
+                              className="ms-4"
+                              variant="light"
+                              size="lg"
+                              onClick={() =>
+                                window.open(anime.trailer.embed_url, "_blank")
+                              }
+                            >
+                              Watch Trailer
+                            </Elements.Button>
+                          </div>
+                        </div>
+                        <div
+                          className="bg-black opacity-75"
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                          }}
+                        ></div>
+                      </section>
+                    )}
+                  </SwiperSlide>
+                );
+              }
+            }
           })}
     </Swiper>
   );

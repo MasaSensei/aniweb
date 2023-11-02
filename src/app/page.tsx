@@ -1,8 +1,12 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Elements from "@/components/elements";
+import CardsGrid from "@/components/fragments/CardsGrid/CardsGrid";
 import Hero from "@/components/layouts/Hero/Hero";
-import { SearchProvider } from "@/lib/context/SearchContext";
-import Image from "next/image";
-import styles from "./page.module.css";
+import Anime from "@/types/anime";
+import { getSeasons } from "@/lib/api/anime";
+import AnimeList from "@/components/layouts/AnimeList/AnimeList";
 
 export default function Home() {
   return (
@@ -10,12 +14,8 @@ export default function Home() {
       <section className="vh-100">
         <Hero />
       </section>
-      <div className="d-flex flex-wrap justify-content-between gap-2 container-fluid">
-        <Elements.Heading>Series</Elements.Heading>
-        <Elements.Card />
-        <Elements.Heading>Movie</Elements.Heading>
-        <Elements.Card />
-      </div>
+      <AnimeList type="series" />
+      <AnimeList type="movie" />
     </main>
   );
 }

@@ -11,7 +11,6 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "bootstrap": "^5.3.2",
-    "glightbox": "^3.2.0",
     "next": "13.5.6",
     "react": "^18",
     "react-bootstrap": "^2.9.1",

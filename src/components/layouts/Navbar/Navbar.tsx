@@ -6,15 +6,8 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { useSearch } from "@/lib/context/SearchContext";
 
 const NavScrollExample = () => {
-  const { searchQuery, setSearchQuery } = useSearch();
-
-  const handleSearch = (e: any) => {
-    e.preventDefault();
-    setSearchQuery(e.target.search.value);
-  };
   return (
     <Navbar expand="lg" bg="dark" sticky="top" data-bs-theme="dark">
       <Container fluid>
@@ -30,15 +23,13 @@ const NavScrollExample = () => {
             <Nav.Link href="#action2">Animes</Nav.Link>
             <Nav.Link href="#action2">Genres</Nav.Link>
           </Nav>
-          <Form className="d-flex" onSubmit={handleSearch}>
+          <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
             <Form.Control
               type="search"
               name="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
             />
             <Button variant="outline-success" type="submit">
               Search

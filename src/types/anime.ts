@@ -1,5 +1,5 @@
 interface Anime {
-  mal_id: number;
+  mal_id: string;
   images: {
     webp: {
       image_url: string;
