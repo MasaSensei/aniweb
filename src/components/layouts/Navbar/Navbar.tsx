@@ -11,7 +11,7 @@ const NavScrollExample = () => {
   return (
     <Navbar expand="lg" bg="dark" sticky="top" data-bs-theme="dark">
       <Container fluid>
-        <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+        <Navbar.Brand href="/">AniWeb</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll" className="justify-content-between">
           <Nav
@@ -21,7 +21,7 @@ const NavScrollExample = () => {
           >
             <Nav.Link href="#action1">Movies</Nav.Link>
             <Nav.Link href="#action2">Animes</Nav.Link>
-            <Nav.Link href="#action2">Genres</Nav.Link>
+            <Nav.Link href="/genres">Genres</Nav.Link>
           </Nav>
           <Form className="d-flex" onSubmit={(e) => e.preventDefault()}>
             <Form.Control
