@@ -1,3 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tambahan dikit biar background-nya langsung Oshi no Ko banget */
 body {
-  background-color: gray;
+  background-color: #0a0e17;
+  color: #f4f4f4;
 }

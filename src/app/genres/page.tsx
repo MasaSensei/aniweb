@@ -1,68 +1,42 @@
-"use client";
-import { useState, useEffect } from "react";
+import { getGenres } from "@/services/anime.service";
 import Link from "next/link";
-import { getGenres } from "@/lib/api/anime";
-import { Genres } from "@/types/genres";
+import { Tag } from "lucide-react";
 
-const Genres = () => {
-  const [genresData, setGenresData] = useState<Genres[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    getGenres()
-      .then((data) => {
-        const filteredGenres = data.data.filter(
-          (genre: Genres) =>
-            genre.name !== "Hentai" &&
-            genre.name !== "Magical Sex Shift" &&
-            genre.name !== "Crossdressing" &&
-            genre.name !== "Adult Cast"
-        );
-        setGenresData(filteredGenres);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setIsLoading(false);
-      });
-  }, []);
+export default async function GenresPage() {
+  const genres = await getGenres();
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="w-full col-12">
-          <div className="d-block" role="main">
-            <div className="border bg-light py-5 px-4 border-1 border-primary">
-              <article className="m-0">
-                <header className="pb-0 border-bottom-0 mt-0">
-                  <h1 className="mb-5 text-dark fs-1 fw-bold">Genres</h1>
-                </header>
-                <div className="content">
-                  <div className="genres">
-                    <ul className="row">
-                      {isLoading
-                        ? "loading"
-                        : genresData.map((genre, index) => (
-                            <li className="col-lg-2" key={index}>
-                              <Link
-                                className="text-decoration-none d-block text-danger"
-                                href={`/genres/${genre.name}`}
-                                target={"_blank"}
-                              >
-                                {genre.name}
-                              </Link>
-                            </li>
-                          ))}
-                    </ul>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
+    <main className="container mx-auto px-4 py-10">
+      <div className="flex items-center gap-4 mb-10">
+        <h1 className="text-4xl font-black uppercase italic tracking-tighter">
+          Browse by <span className="text-onkyo-primary">Genre</span>
+        </h1>
+        <div className="h-[2px] flex-1 bg-onkyo-secondary/20" />
       </div>
-    </div>
-  );
-};
 
-export default Genres;
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {genres.data.map((genre: any) => (
+          <Link
+            key={genre.mal_id}
+            href={`/genres/${genre.mal_id}?name=${genre.name}`}
+            className="group relative bg-onkyo-nav border border-onkyo-secondary/20 p-6 rounded-2xl overflow-hidden hover:border-onkyo-primary/50 transition-all hover:-translate-y-1 shadow-lg"
+          >
+            {/* Background Glow Effect */}
+            <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-onkyo-primary/10 rounded-full blur-2xl group-hover:bg-onkyo-primary/20 transition-all" />
+
+            <Tag
+              className="text-onkyo-primary mb-3 group-hover:rotate-12 transition-transform"
+              size={20}
+            />
+            <h3 className="font-bold text-onkyo-text group-hover:text-onkyo-primary transition-colors">
+              {genre.name}
+            </h3>
+            <p className="text-[10px] text-onkyo-muted uppercase tracking-widest mt-1">
+              {genre.count} Titles
+            </p>
+          </Link>
+        ))}
+      </div>
+    </main>
+  );
+}

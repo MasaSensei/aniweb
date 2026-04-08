@@ -1,12 +1,16 @@
-import NavScrollExample from "@/components/layouts/Navbar/Navbar";
-import type { Metadata } from "next";
-import "bootstrap/dist/css/bootstrap.min.css";
-
+import { Poppins } from "next/font/google";
+import Navbar from "@/components/Layout/Navbar";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Ani Web",
-  description: "See Your Anime's on Ani Web",
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  variable: "--font-poppins",
+});
+
+export const metadata = {
+  title: "AniWeb - Oshi no Ko Edition",
+  description: "Website Anime Fullstack dengan Jikan API",
 };
 
 export default function RootLayout({
@@ -16,12 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <title>Ani Web</title>
-      </head>
-      <body>
-        <NavScrollExample />
+      <body
+        className={`${poppins.variable} font-sans bg-onkyo-bg text-onkyo-text`}
+      >
+        <Navbar />
         {children}
+        {/* Kamu bisa tambah Footer di sini nanti */}
       </body>
     </html>
   );
